@@ -1,0 +1,63 @@
+SQL CODES:
+
+SELECT * FROM ecommerce_data LIMIT 10;
+
+
+SELECT * 
+FROM ecommerce_data
+WHERE Country = 'United Kingdom'
+LIMIT 10;
+
+
+SELECT *
+FROM ecommerce_data
+ORDER BY Quantity DESC
+LIMIT 10;
+
+
+SELECT Country,
+       SUM(Quantity) AS Total_Quantity
+FROM ecommerce_data
+GROUP BY Country
+ORDER BY Total_Quantity DESC;
+
+
+SELECT Country,
+       AVG(UnitPrice) AS Average_Price
+FROM ecommerce_data
+GROUP BY Country
+ORDER BY Average_Price DESC;
+
+
+SELECT Country,
+       COUNT(InvoiceNo) AS Total_Orders
+FROM ecommerce_data
+GROUP BY Country
+ORDER BY Total_Orders DESC;
+
+
+SELECT Country,
+       COUNT(InvoiceNo) AS Total_Orders
+FROM ecommerce_data
+GROUP BY Country
+HAVING COUNT(InvoiceNo) > 1000
+ORDER BY Total_Orders DESC;
+
+
+SELECT Description,
+       Quantity
+FROM ecommerce_data
+WHERE Quantity > (
+    SELECT AVG(Quantity)
+    FROM ecommerce_data
+);
+
+
+CREATE VIEW country_sales_view AS
+SELECT Country,
+       SUM(Quantity) AS Total_Quantity,
+       AVG(UnitPrice) AS Average_Price
+FROM ecommerce_data
+GROUP BY Country;
+
+SELECT * FROM country_sales_view;
